@@ -1,8 +1,9 @@
 name: wf-develop-pr
 on:
   pull_request:
-  branches:
-    - develop
+    branches:
+      - develop
+
 jobs:
   develop-pr-job:
     runs-on: ubuntu-latest
