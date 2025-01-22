@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: repo checkout
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Lint HTML and CSS Files
         run: |
@@ -17,5 +17,5 @@ jobs:
 
       - name: Build website
         run: |
-          npx parcel build "./src/index.html" --dist
-          npx stylelint "**/*.css"
+          npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+          
