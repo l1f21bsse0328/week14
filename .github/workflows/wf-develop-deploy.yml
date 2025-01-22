@@ -1,0 +1,35 @@
+name: wf-develop-deploy
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  wf-develop-build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Build website
+        run: |
+          npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+          
+      - name: upload Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with: 
+          path: "./dist"
+          name: "develop-artifacts"
+  wf-develop-deploy-job:
+    needs: wf-develop-build-job
+    permissions:
+      pages: write
+      id-tokens: write
+    environment: development-env"           
+    runs-on: ubuntu-latest
+    steps:
+     - name: Deploy Build Artifacts on github pages
+       uses: actions/deploy-pages@v4
+       with:
+       artifact_name: "develop-artifact"
+       token: ${{github.token}}
